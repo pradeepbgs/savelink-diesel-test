@@ -1,9 +1,8 @@
 import Router from 'diesel-core'
-import userService from '../services/user.service'
+import UserController from '../controller/user.controller'
 
 export const userRouter = new Router()
+const userController = new UserController()
 
-const user_service = new userService()
-
-userRouter.post("/register",user_service.registerUser)
-userRouter.post("/login",user_service.loginUser)
+userRouter.post("/register",userController.register)
+userRouter.post("/login",userController.login)

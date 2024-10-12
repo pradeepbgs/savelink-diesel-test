@@ -1,15 +1,15 @@
 import Router from 'diesel-core'
-import linkService from '../services/link.service'
 import { verifyJwt } from '../middleware/auth.middleware'
+import LinkController from '../controller/link.controller'
 
 export const linkRouter = new Router()
-const link_service = new linkService()
+const linkController = new LinkController()
 
 linkRouter
-.post("/save-link",verifyJwt,link_service.save_link)
+.post("/save-link",verifyJwt,linkController.createLink)
 
 linkRouter
-.delete("/delete-link",verifyJwt,link_service.delete_link)
+.delete("/delete-link",verifyJwt,linkController.deleteLink)
 
 linkRouter
-.get("/get-links",verifyJwt,link_service.get_links)
+.get("/get-links",verifyJwt,linkController.getLinks)

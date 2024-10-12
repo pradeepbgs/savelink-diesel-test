@@ -3,7 +3,8 @@ import { signupValidation } from "../schemas/signUpSchema";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import UserRepository from "../repository/user.repository";
-class userService{
+
+class UserService{
     constructor(){
         this.userRepository = new UserRepository();
     }
@@ -123,4 +124,4 @@ loginUser = async (ctx) => {
     }
 }
 
-export default userService
+export default UserService

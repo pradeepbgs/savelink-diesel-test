@@ -2,12 +2,11 @@ import diesel from 'diesel-core'
 import { connectDB } from './db/dbconnect'
 import { userRouter } from './routes/user.route'
 import { linkRouter } from './routes/link.route'
-import { verifyJwt } from './middleware/auth.middleware'
 
 const app = new diesel()
 
-app.get("/",verifyJwt,()=>{
-    return new Response("hi")
+app.get("/",()=>{
+    return new Response("welcome to the server")
 })
 
 app.register("/api/v1/user",userRouter)

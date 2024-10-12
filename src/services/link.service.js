@@ -1,6 +1,6 @@
 import LinkRepository from "../repository/link.repository";
 
-class linkService {
+class LinkService {
     constructor() { 
         this.linkRepository = new LinkRepository()
     }
@@ -107,4 +107,4 @@ class linkService {
     }
 }
 
-export default linkService
+export default LinkService
