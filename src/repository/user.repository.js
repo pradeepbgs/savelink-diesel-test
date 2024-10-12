@@ -1,7 +1,7 @@
 import { userModel } from "../models/user.model";
 
 class UserRepository {
-    // constructor(){}
+    constructor(){}
 
     async findById(userId) {
         return await userModel.findById(userId).select("-password");
