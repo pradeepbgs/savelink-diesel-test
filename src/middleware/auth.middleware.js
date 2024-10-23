@@ -4,7 +4,7 @@ import UserRepository from "../repository/user.repository.js";
 const userRepository = new UserRepository()
 export const verifyJwt = async (xl) => {
     try {
-        let token = xl.getCookie('token') || xl.req.headers.get("Authorization");
+        let token = await xl.getCookie('token') || xl.req.headers.get("Authorization");
         
         if (!token) {
             console.log("no access token found, Unauthorize request");
@@ -17,16 +17,14 @@ export const verifyJwt = async (xl) => {
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-
         const user = await userRepository.findById(decodedToken._id)
-        // Set req.user only if user is logged in
+
         if (!user) {
             console.log("No User found, Unauthorized request");
             xl.json({ message: "No User found, Unauthorized request" },401);
         }
 
         xl.set('user',user)
-        
         xl.next();
     } catch (error) {
         console.error("Error verifying token:", error);

@@ -88,9 +88,8 @@ loginUser = async (ctx) => {
                 message:"Invalid password"
             },401)
         }
-
         const tokendata = {
-            _id: user._id,
+            _id: user.id,
             username: user.username,
             email: user.email
          }

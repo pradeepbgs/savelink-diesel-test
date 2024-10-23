@@ -8,16 +8,14 @@ class LinkService {
      save_link = async (xl) => {
         try {
             const { link, title, tags } = await xl.body();
-
+            
             const userPayload = await xl.get("user");
-
-            const { _id } = userPayload;
-
+            const { id } = userPayload;
             //here we can do is to check whether this user exist or not in our db but im not writing that
             const linkData = {
                 title: title ?? "No title has been given to this link",
-                link,
-                user: _id,
+                link:link,
+                user_id: id,
                 tags,
             };
             await this.linkRepository.createLink(linkData)
@@ -44,16 +42,17 @@ class LinkService {
     }
 
      delete_link = async (xl) => {
-        const {link_id} = xl.getParams('link_id')
+        console.log(xl.getParams('id'))
+        const {id} = xl.getParams('id')
         try {
-           if (!link_id) {
+           if (!id) {
                return xl.json({   
                        success: false, 
                        message: "Invalid link" 
                    },  400);
            }
 
-           const link = await this.linkRepository.findLinkById(link_id)
+           const link = await this.linkRepository.findLinkById(id)
            if (!link) {
                return xl.json({
                    success: false,
@@ -80,10 +79,11 @@ class LinkService {
      get_links = async (xl) => {
         try {
             const {page,filter} = await xl.getQuery()
-            const token = xl.get('token')
-            const { _id } = token.payload;
+            const token = xl.get('user')
             
-            const links = await this.linkRepository.findLinksByUserIdWithFilter(_id,filter,page)
+            const { id } = token;
+            
+            const links = await this.linkRepository.findLinksByUserIdWithFilter(id,filter,page)
 
             return xl.json(
               {
